@@ -3,6 +3,49 @@ leet code - 938. Range Sum of BST
 approach = Level order traversal  BFS and dfs
 
 '''
+
+# optimal approach 
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+class Solution:
+    global res
+    global L
+    global R
+    def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
+        if not root:
+            return 
+        self.res=0
+        self.L=L
+        self.R=R
+        self.helper(root)
+        return self.res
+             
+                    
+    
+    
+    def helper(self, root):
+        if not root:
+            return 
+        val=root.val
+        if self.L<=val<=self.R:
+            self.res+=val
+        if val>=self.L:
+            self.helper(root.left)
+        if val<=self.R:
+            self.helper(root.right)
+       
+        
+            
+        
+                   
+        
 # BFS 
 # Definition for a binary tree node.
 # class TreeNode:
