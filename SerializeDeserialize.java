@@ -6,6 +6,9 @@
  *     TreeNode right;
  *     TreeNode(int x) { val = x; }
  * }
+ * 
+ * Time complexity : O(n)
+ * Space complexity  O(n)
  */
 public class Codec {
 
