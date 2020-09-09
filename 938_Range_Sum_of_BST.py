@@ -16,6 +16,25 @@
 # 2. Add the value of current node if it falls within the range
 # 3. Recusively call the dfs on left and right child if it falls within the range
 class Solution:
+    def rangeSumBSTIterative(self, root: TreeNode, L: int, R: int) -> int:
+        if not root:return 0
+        stack = []
+        curr = root
+        res = 0
+        while curr or stack:
+            while curr:
+                stack.append(curr)
+                if curr.val < L:
+                    break
+                curr = curr.left
+            curr = stack.pop()
+            if curr.val > R:
+                return res
+            if curr.val >= L:
+                res+=curr.val
+            curr = curr.right
+        return res
+
     def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
         res = 0
         def dfs(root):
