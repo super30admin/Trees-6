@@ -9,12 +9,12 @@ class Codec:
             string = dfs(root.left, string)
             string = dfs(root.right, string)
             return string
-        return dfs(root, '')[:-1]       # removing last ','
+        return dfs(root, '')[:-1]      
     
     def deserialize(self, data):
         def dfs(l):
             if(l[0] == "None"):
-                l.pop(0)                # remember to pop
+                l.pop(0)                
                 return None
             root = TreeNode( l.pop(0) )
             root.left = dfs(l)
