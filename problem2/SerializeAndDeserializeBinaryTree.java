@@ -1,5 +1,5 @@
-// Time Complexity : 
-// Space Complexity : 
+// Time Complexity : O(n), n -> Number of nodes
+// Space Complexity : O(n)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
 package problem2;
