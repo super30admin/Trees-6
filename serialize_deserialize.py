@@ -6,6 +6,10 @@
 #         self.right = None
 
 class Codec:
+    '''
+    T = O(N)
+    S = O(N)
+    '''
 
     def serialize(self, root):
         """Encodes a tree to a single string.
