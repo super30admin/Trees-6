@@ -1,0 +1,64 @@
+#Range Sum of BST
+
+#tc: O(n)
+#sc: O(m)
+class Solution:
+    def rangeSumBST(self, root, low, high):
+        def dfs(node):
+            if not node: return
+            if low <= node.val <= high: self.out += node.val
+            if node.val > low:  dfs(node.left)
+            if node.val < high: dfs(node.right)
+                
+        self.out = 0
+        dfs(root)
+        return self.out
+
+#Serialize and Deserialize Binary Tree  
+#timeComplexity: O(n)
+#spaceComplexity: O(n)
+class Codec:
+    def serialize(self, root):
+        if root == None: return "#"
+        return str(root.val) + "," + self.serialize(root.left) + "," + self.serialize(root.right);
+
+    def deserialize(self, data):
+        nodes = data.split(",")
+        self.i = 0
+
+        def dfs():
+            if self.i == len(nodes): 
+                return None
+            nodeVal = nodes[self.i]
+            self.i += 1
+            if nodeVal == "#": 
+                return None
+            
+            root = TreeNode(int(nodeVal))
+            root.left = dfs()
+            root.right = dfs()
+            return root
+
+        return dfs()
+
+#Binary Tree Vertical Order Traversal
+#tc:O(n)
+#sc:O(n)
+class Solution:
+    def verticalOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        
+        columns = defaultdict(list)
+        
+        q = deque([(root, 0)])
+        while q:
+            node, x = q.popleft()
+            columns[x].append(node.val)
+            
+            if node.left:
+                q.append((node.left, x - 1))
+            if node.right:
+                q.append((node.right, x + 1))
+                
+        return [columns[x] for x in range(min(columns), max(columns)+1)]
