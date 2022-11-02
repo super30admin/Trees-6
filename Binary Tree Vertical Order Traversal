@@ -1,0 +1,24 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        res = defaultdict(list)
+        q = deque([(root, 0)])
+        while q:
+            a, i = q.popleft()
+            if a.left:
+                q.append((a.left, i - 1))
+            if a.right:
+                q.append((a.right, i + 1))
+            res[i].append(a.val)
+        return [res[x] for x in sorted(res.keys())]
+    
+# Time Complexity: O(nlogn)
+# Space Complexity: O(n)
+# Successfully implemented on Leetcode
