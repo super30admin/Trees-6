@@ -1,11 +1,13 @@
 /*
-// Time Complexity :
-// Space Complexity :
-// Did this code successfully run on Leetcode :
+// Time Complexity : O(N) number of nodes
+// Space Complexity : O(1)
+// Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this :
 
 
 // Your code here along with comments explaining your approach
+For desiralize you first find out if a node exist. 
+Then assign their children and then push into queue
 */
 
 #include<iostream>
