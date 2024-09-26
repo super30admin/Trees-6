@@ -1,0 +1,22 @@
+//Timecomplexity:- O(N).
+//space complexity:- O(1).
+//inorder traversing and adding all the values that are in range low, high;
+
+
+class Solution {
+    int sum=0;
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        inorder(root,low,high);
+        return sum;
+    }
+    private void inorder(TreeNode root, int low, int high){
+        if(root==null){
+            return;
+        }
+        if(root.val>=low && root.val<=high){
+            sum=sum+root.val;
+        }
+        inorder(root.left,low,high);
+        inorder(root.right,low,high);
+    }
+}
