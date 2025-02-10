@@ -61,3 +61,66 @@ class Solution{
     }
 }
 
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+// Approach : By Using DFS along with height information and maintaining the map
+// Time : O(n) // To traverse the tree & creating Map + n/2 * klogk
+// Space :
+class Solution {
+    List<List<Integer>> result;
+    HashMap<Integer ,List<int[]>> map;
+    int max , min ;
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        this.result = new ArrayList<>();
+        this.map = new HashMap<>();
+        this.min = 0;
+        this.max=0;
+        if(root == null) return result;
+        dfs(root,0,0); // maintain width and height
+
+        for(int i=min;i<=max;i++){
+            List<int[]> currList = map.get(i);
+            // sort them based off height
+            Collections.sort(currList,(a,b)->a[1]-b[1]);
+            List<Integer> re = new ArrayList<>();
+            for(int[] element:currList){
+                re.add(element[0]);
+            }
+
+            result.add(re);
+        }
+        return result;
+        
+    }
+    private void dfs(TreeNode root , int width , int height){
+        // Base case
+        if(root == null) return;
+        
+        min = Math.min(min,width);
+        max = Math.max(max,width);
+
+        map.putIfAbsent(width, new ArrayList<>());
+        map.get(width).add(new int[]{root.val,height});
+
+        // Traverse to left 
+        dfs(root.left,width-1,height+1);
+        // Traverse to right
+        dfs(root.right,width+1,height+1);
+
+    }
+}
+
