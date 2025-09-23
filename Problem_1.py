@@ -34,10 +34,11 @@ def rangeSumBST(root: Optional[TreeNode], low: int, high: int) -> int:
         if not curr:
             return None
 
-        if not curr.left and not curr.right:
-            if low <= curr.val <= high:
-                sum += curr.val
-            return None
+        # handle child node (but this is redundant code)
+        # if not curr.left and not curr.right:
+        #     if low <= curr.val <= high:
+        #         sum += curr.val
+        #     return None
 
         if low <= curr.val <= high:
             sum += curr.val
