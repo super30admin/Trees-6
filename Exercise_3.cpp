@@ -1,4 +1,4 @@
-// Time Cmplexity: O(N * k log k) where N is the number of nodes in the binary tree and k is the average elements in a column
+// Time Cmplexity: O(N) where N is the number of nodes in the binary tree
 // Space Complexity: O(N) where N is the number of nodes in the binary tree
 // Were you able to solve the problem on Leetcode?: Yes
 // Did you face any challenges while solving the problem? No
@@ -17,59 +17,48 @@
 class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-        if (root == nullptr) {
-            return {};
-        }
-        // BFS based approach
-        // hashmap with the x coordinate as the key assuming that root is 0,0 and left child is -1, 1 and right child is 1, 1
-        // this hashmap will store the all nodes for a given column with same x coordinate
-        unordered_map<int, vector<pair<int,int>>> cols; // {x: [(y, val)]}
+        if (!root) return {};
 
-        // BFS queue to process nodes at each level
-        queue<tuple<TreeNode*, int, int>> q; // (node, x, y)
-        q.push({root, 0, 0});
+        vector<vector<int>> result;
+        // store nodes for each X coordinate
+        unordered_map<int, vector<int>> cols;
+        // store nodes in level order
+        queue<pair<TreeNode*, int>> q;
 
-        // defines range of x
         int minX=0, maxX=0;
 
-        while (!q.empty()) {
+        // Process the tree level order
+        q.push({root, 0});
 
-            // get the node, x and y
-            auto [node, x, y] = q.front();
+        while(!q.empty()) {
+
+            auto& [node, x] = q.front();
             q.pop();
+            // add node val for current X coordinate and store it in the map with corrent X position
+            cols[x].push_back(node->val); 
 
-            // add the node to the hashmap
-            cols[x].push_back({y, node->val});
-            // keep tracking min and max value of x
-            minX = min(minX, x);
-            maxX = max(maxX, x);
-            
-            // add the left and right child to the queue if they exist
-            if (node->left) q.push({node->left, x-1, y+1});
-            if (node->right) q.push({node->right, x+1, y+1});
 
-        }
-
-        vector<vector<int>> res;
-        // iterate starting from smallest x value to largest x
-        for(int x= minX; x<=maxX; x++) {
-            
-            auto& col = cols[x];
-            // sort the column based on y coordinate and then value
-            sort(col.begin(), col.end(), [](auto& a, auto& b){
-                if (a.first == b.first) return a.second<b.second;
-                return a.first < b.first;
-            });
-            // get the values from the column and add to the result
-            vector<int> vals;
-            for(auto& v: col){
-                vals.push_back(v.second);
+            // if left child exists, add it to the queue
+            if (node->left) {
+                q.push({node->left, x-1});
+                // track min and max X
+                minX = min(minX, x-1);
+                maxX = max(maxX, x-1);
             }
-
-            res.push_back(vals);
-            
+            // if right child exists, add it to the queue
+            if (node->right) {
+                q.push({node->right, x+1});
+                // track min and max X
+                minX = min(minX, x+1);
+                maxX = max(maxX, x+1);
+            }
+        }
+        // push nodes for each X coordinate starting from minX to maxX into the result array
+        for(int i=minX; i<=maxX; i++) {
+            result.push_back(cols[i]);
         }
 
-        return res;
+        return result;
+
     }
 };
